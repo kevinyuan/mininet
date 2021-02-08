@@ -1,0 +1,22 @@
+Commands Used on Server1:
+sudo python VXeample1.py
+in mininet: (mininet)
+
+
+# On VM1
+sh ovs-ofctl add-flows s1 flow1.txt
+sh ovs-ofctl dump-flows s1
+sh ovs-vsctl add-port s1 vtep -- set interface vtep type=vxlan option:remote_ip=192.168.56.102 option:key=flow ofport_request=10
+
+# On VM2
+sh ovs-ofctl add-flows s2 flow2.txt
+sh ovs-ofctl dump-flows s2
+sh ovs-vsctl add-port s2 vtep -- set interface vtep type=vxlan option:remote_ip=192.168.56.101 option:key=flow ofport_request=10
+
+And then some testing:
+red1 ping 10.0.0.2 (success)
+red1 ip link set dev red1-eth0  down
+red1 ip link set dev red1-eth0 up
+
+Or on server 2:
+red2 ip link set dev red2-eth0  down
